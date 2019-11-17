@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/devborz/lab_06_multithreads.svg?token=rrbTiACLSyD7Yjcuyygg&branch=master)](https://travis-ci.com/devborz/lab_06_multithreads)
 # Лабораторная работа №6
 
 ## Задание
@@ -71,7 +72,7 @@ logging::add_file_log("log.log"); // тривиальный вывод в фай
 logging::add_file_log // расширенная настройка
 (
     keywords::file_name = "log_%N.log",
-    keywords::rotation_size = 10 * 1024 * 1024, 
+    keywords::rotation_size = 10 * 1024 * 1024,
     keywords::time_based_rotation = sinks::file::rotation_at_time_point{0, 0, 0},
     keywords::format = "[%TimeStamp%]: %Message%"
 );
