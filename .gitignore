@@ -33,3 +33,6 @@
 
 # Builds
 _build/*
+
+# Logs
+logs/*

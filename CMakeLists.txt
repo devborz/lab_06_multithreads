@@ -18,46 +18,32 @@ HunterGate(
   SHA1 "9a3594a61227967fb92159339ba326701b287b19"
 )
 
-add_definitions(-D_GLIBCXX_USE_CXX11_ABI=0)
-project(calculateSHA)
-#string(APPEND CMAKE_CXX_FLAGS " -pedantic -Werror -Wall -Wextra")
-#string(APPEND CMAKE_CXX_FLAGS " -Wno-unused-command-line-argument")
-#string(APPEND CMAKE_CXX_FLAGS " -Wshadow -Wnon-virtual-dtor")
+project(SHA)
 
-#hunter_add_package(GTest)
-hunter_add_package(Boost COMPONENTS log)
-find_package(Boost CONFIG REQUIRED log)
-#find_package(GTest CONFIG REQUIRED)
+hunter_add_package(Boost COMPONENTS log thread filesystem system)
+find_package (Threads)
+find_package(Boost CONFIG REQUIRED log thread filesystem system)
 
 
 add_library(calculateSHA INTERFACE)
-add_library(log INTERFACE)
+add_library(Log INTERFACE)
 add_library(picosha2 INTERFACE)
 
 add_executable(calculate
   ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
 )
 
-target_include_directories(calculateSHA INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_include_directories(log INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
-target_include_directories(picosha2 INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+target_include_directories(calculateSHA
+  INTERFACE $<BUILD_INTERFACE:${${PROJECT_NAME}_SOURCE_DIR}/include>
+            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+target_include_directories(Log
+  INTERFACE $<BUILD_INTERFACE:${${PROJECT_NAME}_SOURCE_DIR}/include>
+            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
+target_include_directories(picosha2
+  INTERFACE $<BUILD_INTERFACE:${${PROJECT_NAME}_SOURCE_DIR}/include>
+            $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
-#target_include_directories(tests PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
-#target_link_libraries(tests GTest::main template)
-target_link_libraries(log INTERFACE Boost::log)
-target_link_libraries(calculateSHA INTERFACE picosha2 log)
+
+target_link_libraries(Log INTERFACE Boost::log Boost::thread Boost::filesystem Boost::system)
+target_link_libraries(calculateSHA INTERFACE picosha2 Log ${CMAKE_THREAD_LIBS_INIT})
 target_link_libraries(calculate calculateSHA)
-
-#enable_testing()
-#add_test(NAME unit_tests COMMAND tests)
-
-#if(BUILD_COVERAGE)
-#  set(ENABLE_COVERAGE ON CACHE BOOL "Enable coverage build." FORCE)
-#  list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-#  find_package(codecov)
-#  # TODO: change template word to project name and delete this comment
-#  add_coverage(template)
-#  add_coverage(tests)
-#  list(APPEND LCOV_REMOVE_PATTERNS "'${PROJECT_SOURCE_DIR}/tests/*'")
-#  coverage_evaluate()
-#endif()

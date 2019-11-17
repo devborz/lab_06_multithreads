@@ -3,5 +3,6 @@
 #include "calculateSHA.h"
 
 int main(int argc, char* argv[]) {
+
     begin();
 }
