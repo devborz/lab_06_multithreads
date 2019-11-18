@@ -32,7 +32,7 @@ bool isValid(const std::string& hash) {
 
 void calculateSHA() {
     unsigned int i = 0;
-    while(i < 100000) {
+    while(true) {
         unsigned char ch1 = _random(32, 126);
         unsigned char ch2 = _random(32, 126);
         unsigned char ch3 = _random(32, 126);
@@ -54,7 +54,7 @@ void calculateSHA() {
 void begin() {
     auto threadsCount = boost::thread::hardware_concurrency();
     boost::thread threads[threadsCount];
-    
+
     init();
 
     for(unsigned int i = 0; i < threadsCount; i++) {
