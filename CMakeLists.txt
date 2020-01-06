@@ -21,7 +21,7 @@ HunterGate(
 project(SHA)
 
 hunter_add_package(Boost COMPONENTS log thread filesystem system)
-find_package (Threads)
+# find_package (Threads)
 find_package(Boost CONFIG REQUIRED log thread filesystem system)
 
 add_library(task INTERFACE)
@@ -44,6 +44,5 @@ target_include_directories(picosha2
 
 
 target_link_libraries(log INTERFACE Boost::log Boost::thread Boost::filesystem Boost::system)
-target_link_libraries(task INTERFACE picosha2 log Boost::thread
-${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(task INTERFACE picosha2 log Boost::thread)
 target_link_libraries(main task)
