@@ -24,19 +24,18 @@ hunter_add_package(Boost COMPONENTS log thread filesystem system)
 find_package (Threads)
 find_package(Boost CONFIG REQUIRED log thread filesystem system)
 
-
-add_library(calculateSHA INTERFACE)
-add_library(Log INTERFACE)
+add_library(task INTERFACE)
+add_library(log INTERFACE)
 add_library(picosha2 INTERFACE)
 
-add_executable(calculate
+add_executable(main
   ${CMAKE_CURRENT_SOURCE_DIR}/sources/main.cpp
 )
 
-target_include_directories(calculateSHA
+target_include_directories(task
   INTERFACE $<BUILD_INTERFACE:${${PROJECT_NAME}_SOURCE_DIR}/include>
             $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
-target_include_directories(Log
+target_include_directories(log
   INTERFACE $<BUILD_INTERFACE:${${PROJECT_NAME}_SOURCE_DIR}/include>
             $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 target_include_directories(picosha2
@@ -44,6 +43,7 @@ target_include_directories(picosha2
             $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>)
 
 
-target_link_libraries(Log INTERFACE Boost::log Boost::thread Boost::filesystem Boost::system)
-target_link_libraries(calculateSHA INTERFACE picosha2 Log ${CMAKE_THREAD_LIBS_INIT})
-target_link_libraries(calculate calculateSHA)
+target_link_libraries(log INTERFACE Boost::log Boost::thread Boost::filesystem Boost::system)
+target_link_libraries(task INTERFACE picosha2 log Boost::thread
+${CMAKE_THREAD_LIBS_INIT})
+target_link_libraries(main task)

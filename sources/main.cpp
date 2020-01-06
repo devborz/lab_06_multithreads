@@ -1,8 +1,6 @@
-// Copyright 2018 devborz
-
-#include "calculateSHA.h"
+#include "task.h"
 
 int main(int argc, char* argv[]) {
-
-    begin();
+  task::startThreads();
+  return 0;
 }
