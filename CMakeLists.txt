@@ -21,7 +21,6 @@ HunterGate(
 project(SHA)
 
 hunter_add_package(Boost COMPONENTS log thread filesystem system)
-# find_package (Threads)
 find_package(Boost CONFIG REQUIRED log thread filesystem system)
 
 add_library(task INTERFACE)
