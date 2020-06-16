@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/devborz/lab_06_multithreads.svg?token=rrbTiACLSyD7Yjcuyygg&branch=master)](https://travis-ci.com/devborz/lab_06_multithreads)
+[![Build Status](https://travis-ci.com/devborz/multithreads.svg?token=rrbTiACLSyD7Yjcuyygg&branch=master)](https://travis-ci.com/devborz/multithreads)
 # Лабораторная работа №6
 
 ## Задание
